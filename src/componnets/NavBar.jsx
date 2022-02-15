@@ -1,5 +1,5 @@
 import React from 'react'
-//import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import {Navbar,Container} from 'react-bootstrap'
 
@@ -7,11 +7,11 @@ import {Navbar,Container} from 'react-bootstrap'
 function NavBar() {
 
 
-//const navigate= useNavigate()
+const navigate= useNavigate()
 
-//const handleClick=()=>{
-//    navigate('/login')
-//}
+const handleClick=()=>{
+navigate('/login')
+}
   return (
     <div>
 <Navbar className='navbar' expand="lg">
@@ -22,14 +22,14 @@ function NavBar() {
         <button
             type='button'
             className='btn btn-outline-dark mx-2'
-           // onClick={handleClick}
+           onClick={handleClick}
         >
             Login
         </button>
         <button
             type='button'
             className='btn btn-outline-dark mx-2'
-           // onClick={()=>navigate('/register')}
+           onClick={()=>navigate('/register')}
         >
             Register
         </button>

@@ -6,6 +6,9 @@ const AuthContext =React.createContext();
 export const AuthContextProvider=(props)=>{
 
     const [ loginError,setLoginError] =useState(false)
+
+    const [login,setLogin] = useState(false)
+
     const navi = useNavigate()
     const [credentials,setCredentials] = useState({
         firstName:'',
@@ -27,6 +30,7 @@ export const AuthContextProvider=(props)=>{
     const handleLogin =(email,password) =>{
 
         if( credentials.email === email && credentials.password === password){
+            setLogin(true)
             setLoginError(false)
             navi('/')
 
@@ -35,14 +39,27 @@ export const AuthContextProvider=(props)=>{
         }
     }
 
-    
+    const handleLogout =()=>{
+        setCredentials({
+            firstName:'',
+            lastName:'',
+            email:'',
+            password:'',
+        })
+        setLogin(false)
+    }
+
+
+
     return(
         <AuthContext.Provider value={{
 
             credentials:credentials,
             handleCredentials:handleCredentials,
             handleLogin:handleLogin,
-            loginError:loginError
+            loginError:loginError,
+            login:login,
+            handleLogout:handleLogout
         }}>
             {props.children}
 

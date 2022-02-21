@@ -1,18 +1,23 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+
+import AuthContext from "../context/AuthContext";
 
 export default function Login() {
-  const navigate = useNavigate();
+
+
+  const {handleLogin,loginError} =useContext(AuthContext)
+
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [alert, setAlert] = useState("alert alert-danger d-none"); // d- none sayfada gostermey
+ // const [alert, setAlert] = useState("alert alert-danger d-none"); // d- none sayfada gostermey
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email && password) {
-      navigate("/");
+      handleLogin(email,password)
     } else {
-      setAlert("alert alert-danger");
+    
     }
   };
 
@@ -23,12 +28,12 @@ export default function Login() {
       </div>
 
       <div className="login-form">
-        <div className={alert} role="alert">
+        <div className={loginError ? "alert alert-danger " : 'alert-danger d-none'} role="alert">
           This is a primary alert—check it out!
         </div>
 
         <h1 className="form-title display-3">login</h1>
-        <form id="login" onSubmit={handleSubmit}>
+        <form id="login" onSubmit={(e)=>handleSubmit(e)}>
           <div className="mb-4">
             <label for="email" className="form-label display-4">
               {" "}
@@ -40,6 +45,7 @@ export default function Login() {
               id="email"
               placeholder="enter your email adress..."
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
           <div className="mb-3">
@@ -52,6 +58,7 @@ export default function Login() {
               id="password"
               placeholder="enter your Password..."
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
           <input

@@ -16,7 +16,7 @@ navigate('/login')
     <div>
 <Navbar className='navbar' expand="lg">
   <Container>
-    <Navbar.Brand href="#home">React-MOVIE</Navbar.Brand>
+    <Navbar.Brand href={`/`}>React-MOVIE</Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <div className='buttons'>
         <button

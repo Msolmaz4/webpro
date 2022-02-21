@@ -1,24 +1,39 @@
 import React, { useContext, useState } from "react";
 import "./Register.css";
-import AuthContext from "../context/AuthContext";
+//import AuthContext from "../context/AuthContext";
+
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../auth/firebase-config";
+
+
+
 
 export default function Register() {
-  const { credentials, handleCredentials } = useContext(AuthContext);
+ // const { credentials, handleCredentials } = useContext(AuthContext);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    handleCredentials(firstName, lastName, email, password);
-    setEmail("");
-    setFirstName("");
-    setPassword("");
-    setPassword("");
+    //handleCredentials(firstName, lastName, email, password);
+    //setEmail("");
+    //setFirstName("");
+    //setPassword("");
+    //setPassword("");
+
+    try {
+    
+     let user= await createUserWithEmailAndPassword(auth,email,password);
+     console.log(user)
+
+    }catch (err) {
+      alert(err)
+    }
   };
 
- console.log(credentials)
+
   return (
     <div className="rer">
       <div className="rer1">

@@ -1,23 +1,29 @@
 import React, { useContext, useState } from "react";
+import { auth } from "../auth/firebase-config";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 import AuthContext from "../context/AuthContext";
 
+import { useNavigate } from "react-router-dom";
 export default function Login() {
 
 
   const {handleLogin,loginError} =useContext(AuthContext)
-
+ const naviga = useNavigate()
   
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
  // const [alert, setAlert] = useState("alert alert-danger d-none"); // d- none sayfada gostermey
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
-    if (email && password) {
-      handleLogin(email,password)
-    } else {
     
+    try{
+      let user = await signInWithEmailAndPassword(auth,email,password)
+      naviga('/')
+    }
+    catch(err) {
+      alert(err)
     }
   };
 

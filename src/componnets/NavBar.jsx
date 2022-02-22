@@ -1,13 +1,19 @@
 import React, { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../auth/firebase-config";
 
 import { Navbar, Container } from "react-bootstrap";
 
 function NavBar() {
-  const { credentials, login, handleLogout } = useContext(AuthContext);
+  const {   currentUser} = useContext(AuthContext);
 
   const navigate = useNavigate();
+
+  const handleLogout =()=>{
+    signOut(auth)
+  }
 
   return (
     <div>
@@ -16,10 +22,10 @@ function NavBar() {
           <Navbar.Brand href={`/`}>React-MOVIE</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <div className="buttons">
-            {login ? (
+            {currentUser ? (
               <div>
                 <h1 className="text-capitalize text-light">
-                  {credentials.firstName + " " + credentials.lastName}
+                  {currentUser.displayName}
                 </h1>
                 <button
                   onClick={handleLogout}

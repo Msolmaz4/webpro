@@ -5,11 +5,15 @@ import AuthContext from "../context/AuthContext";
 import { createUserWithEmailAndPassword ,updateProfile } from "firebase/auth";
 import { auth } from "../auth/firebase-config";
 
-
+import { useNavigate } from "react-router-dom";
 
 
 export default function Register() {
- const { credentials, handleCredentials } = useContext(AuthContext);
+
+
+
+  const naviga = useNavigate()
+  const { credentials, handleCredentials } = useContext(AuthContext);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -29,6 +33,7 @@ export default function Register() {
      console.log(user)
                 await updateProfile(auth.currentUser,{displayName:displayName})
                 console.log(auth.currentUser)
+                naviga('/')
     }catch (err) {
       alert(err)
     }

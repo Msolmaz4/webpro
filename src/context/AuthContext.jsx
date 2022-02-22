@@ -1,65 +1,35 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom';
-
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../auth/firebase-config';
 
 const AuthContext =React.createContext();
+
+
+
+
 export const AuthContextProvider=(props)=>{
 
-    const [ loginError,setLoginError] =useState(false)
+ 
 
-    const [login,setLogin] = useState(false)
 
-    const navi = useNavigate()
-    const [credentials,setCredentials] = useState({
-        firstName:'',
-        lastName:'',
-        email:'',
-        password:'',
+const [ currentUser,setCurrentUser] = useState()
+   
+useEffect (()=>{
+    onAuthStateChanged(auth,(user)=>{
+        setCurrentUser(user)
     })
 
+},[])
 
-    const handleCredentials = (firstName,lastName,email,password) =>{
-        setCredentials({
-            firstName: firstName,
-            lastName:lastName,
-            email:email,
-            password:password
-        })
-    }
-
-    const handleLogin =(email,password) =>{
-
-        if( credentials.email === email && credentials.password === password){
-            setLogin(true)
-            setLoginError(false)
-            navi('/')
-
-        }else{
-            setLoginError(true)
-        }
-    }
-
-    const handleLogout =()=>{
-        setCredentials({
-            firstName:'',
-            lastName:'',
-            email:'',
-            password:'',
-        })
-        setLogin(false)
-    }
+    
 
 
 
     return(
         <AuthContext.Provider value={{
 
-            credentials:credentials,
-            handleCredentials:handleCredentials,
-            handleLogin:handleLogin,
-            loginError:loginError,
-            login:login,
-            handleLogout:handleLogout
+          currentUser
         }}>
             {props.children}
 
